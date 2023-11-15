@@ -9,11 +9,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{84C45C60-16E
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{2A2D57C9-81E2-4130-8BAB-744B763CC8E6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleLibrary.UnitTests", "Tests\SampleLibrary.UnitTests\SampleLibrary.UnitTests.csproj", "{77A5DF68-F28B-4134-9AB8-551D9E6A641F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SampleLibrary.UnitTests", "Tests\SampleLibrary.UnitTests\SampleLibrary.UnitTests.csproj", "{77A5DF68-F28B-4134-9AB8-551D9E6A641F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E91CF4FB-4995-42B5-90BF-8F3A8FBBCEDA}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
+		README.md = README.md
 	EndProjectSection
 EndProject
 Global
