@@ -1,12 +1,13 @@
 # Pipeline caching
 
 https://learn.microsoft.com/en-us/azure/devops/pipelines/release/caching?view=azure-devops
-
 https://learn.microsoft.com/en-us/azure/devops/pipelines/artifacts/caching-nuget?view=azure-devops
+https://devblogs.microsoft.com/nuget/enable-repeatable-package-restores-using-a-lock-file/
 
 # Central Package Management (CPM)
 
 https://learn.microsoft.com/en-us/nuget/consume-packages/central-package-management
+https://devblogs.microsoft.com/nuget/introducing-central-package-management/
 
 ## Transitive pinning
 
