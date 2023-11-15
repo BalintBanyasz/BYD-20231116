@@ -1,3 +1,10 @@
+trigger:
+  - master
+ 
+pool:
+  vmImage: 'ubuntu-latest'
+ 
+steps:
 - task: UseDotNet@2
   inputs:
     version: '7.x'
