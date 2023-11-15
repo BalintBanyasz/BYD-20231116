@@ -7,6 +7,7 @@ pool:
 variables:
   buildConfiguration: 'Release'
   NUGET_PACKAGES: $(Pipeline.Workspace)/.nuget/packages
+  TF_BUILD: true
  
 steps:
 - task: UseDotNet@2
