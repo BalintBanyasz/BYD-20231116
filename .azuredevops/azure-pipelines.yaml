@@ -29,6 +29,7 @@ steps:
   displayName: 'dotnet restore'
   inputs:
     command: 'restore'
+    arguments: '--locked-mode'
     projects: '**/*.csproj'
 
 - task: DotNetCoreCLI@2
