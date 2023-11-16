@@ -1,5 +1,5 @@
 ﻿using FluentAssertions;
-using Moq;
+using NSubstitute;
 
 namespace SampleLibrary.UnitTests;
 
@@ -9,62 +9,64 @@ public class ServiceTests
     public async Task FunctionAAsync_CallsDependencyWithCorrectArgument()
     {
         // Arrange
-        var mockDependency = new Mock<IDependency>();
-        mockDependency.Setup(x => x.FunctionAAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()))
-            .ReturnsAsync("x");
+        var mockDependency = Substitute.For<IDependency>();
+        mockDependency.FunctionAAsync(Arg.Any<string>(), Arg.Any<CancellationToken>())
+            .Returns(Task.FromResult("x"));
 
-        var sut = new Service(mockDependency.Object);
+        var sut = new Service(mockDependency);
 
         // Act
         await sut.FunctionAAsync("Test");
 
         // Assert
-        mockDependency.Verify(x => x.FunctionAAsync("Test", default), Times.Once());
+        await mockDependency.Received(1).FunctionAAsync("Test", default);
     }
 
     [Fact]
     public async Task FunctionAAsync_CallsDependencyForAllArguments()
     {
         // Arrange
-        var mockDependency = new Mock<IDependency>();
-        mockDependency.SetupSequence(x => x.FunctionAAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()))
-            .ReturnsAsync("x")
-            .ReturnsAsync("y");
+        var mockDependency = Substitute.For<IDependency>();
+        mockDependency.FunctionAAsync(Arg.Any<string>(), Arg.Any<CancellationToken>())
+            .Returns(Task.FromResult("x"));
 
-        var sut = new Service(mockDependency.Object);
+        mockDependency.FunctionAAsync(Arg.Any<string>(), Arg.Any<CancellationToken>())
+            .Returns(Task.FromResult("y"));
+
+        var sut = new Service(mockDependency);
 
         // Act
         await sut.FunctionAAsync("Test", "AnotherValue", "SPECIAL_VALUE");
 
         // Assert
-        mockDependency.Verify(x => x.FunctionAAsync("Test", default), Times.Once());
-        mockDependency.Verify(x => x.FunctionAAsync("AnotherValue", default), Times.Once());
+        await mockDependency.Received(1).FunctionAAsync("Test", default);
+        await mockDependency.Received(1).FunctionAAsync("AnotherValue", default);
     }
 
     [Fact]
     public async Task FunctionAAsync_DoesNotCallDependencyForMagicStringArgument()
     {
         // Arrange
-        var mockDependency = new Mock<IDependency>();
+        var mockDependency = Substitute.For<IDependency>();
 
-        var sut = new Service(mockDependency.Object);
+        var sut = new Service(mockDependency);
 
         // Act
         await sut.FunctionAAsync("SPECIAL_VALUE");
 
         // Assert
-        mockDependency.Verify(x => x.FunctionAAsync("SPECIAL_VALUE", default), Times.Never());
+        await mockDependency.DidNotReceive().FunctionAAsync("SPECIAL_VALUE", default);
     }
 
     [Fact]
     public async Task FunctionAAsync_PropagatesInvalidOperationException()
     {
         // Arrange
-        var mockDependency = new Mock<IDependency>();
-        mockDependency.Setup(x => x.FunctionAAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()))
-            .ThrowsAsync(new InvalidOperationException());
+        var mockDependency = Substitute.For<IDependency>();
+        mockDependency.When(x => x.FunctionAAsync(Arg.Any<string>(), Arg.Any<CancellationToken>()))
+            .Do(x => throw new InvalidOperationException());
 
-        var sut = new Service(mockDependency.Object);
+        var sut = new Service(mockDependency);
 
         // Act
         var act = async () => await sut.FunctionAAsync("InvalidArgument");
