@@ -3,7 +3,7 @@
     <PackageVersion Include="Microsoft.Data.SqlClient" Version="5.1.2" />
   </ItemGroup>
   <!--Transitive dependencies-->
-  <ItemGroup Label="Transitive dependencies">
+  <ItemGroup>
     <PackageVersion Include="Azure.Identity" Version="1.10.3" />
   </ItemGroup>
 </Project>
